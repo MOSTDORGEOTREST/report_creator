@@ -1,0 +1,20 @@
+version: '3.3'
+services:
+  backend:
+    build: ./src
+    command: bash -c 'uvicorn main:app --host 0.0.0.0'
+    ports:
+      - 8000:8000
+    restart: always
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+
+  server:
+    restart: always
+    image: nginx
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    ports:
+      - "80:80"
+
